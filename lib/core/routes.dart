@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../views/home/home_page.dart';
 import '../views/homeView/home_pricipal.dart';
-//import '../views/meditation/meditation_page.dart';
+import '../views/meditation/home_meditation.dart';
 //import '../views/breathing/breathing_page.dart';
 //import '../views/sos/sos_page.dart';
 //import '../views/quiz/quiz_page.dart';
@@ -12,6 +12,7 @@ class AppRoutes {
   static const String home = '/';
   static const String homeView = '/homeView';
   static const String meditation = '/meditation';
+  static const String meditationMusic = '/meditation_music';
   static const String breathing = '/breathing';
   static const String sos = '/sos';
   static const String quiz = '/quiz';
@@ -20,7 +21,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> routes = {
     home: (context) => HomePage(),
     homeView: (context) => HomeView(),
-    //meditation: (context) => MeditationPage(),
+    meditation: (context) => MeditationView(),
     //breathing: (context) => BreathingPage(),
     //sos: (context) => SosPage(),
     //quiz: (context) => QuizPage(),

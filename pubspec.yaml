@@ -34,6 +34,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  carousel_slider: 4.2.1
+
 
 dev_dependencies:
   flutter_test:
@@ -61,7 +63,18 @@ flutter:
     - lib/assets/icons/quiz.png
     - lib/assets/icons/information.png
     - lib/assets/icons/music_meditation.png
-    
+    - lib/assets/icons/meditation.png
+    - lib/assets/icons/timer.png
+    - lib/assets/icons/category.png
+    - lib/assets/images/imagem1.jpg
+    - lib/assets/images/imagem2.jpg
+    - lib/assets/images/imagem3.jpg
+    - lib/assets/icons/relax.png
+    - lib/assets/icons/lua.png
+    - lib/assets/music/relaxamento1.mp3
+    - lib/assets/music/relaxamento2.mp3
+  
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

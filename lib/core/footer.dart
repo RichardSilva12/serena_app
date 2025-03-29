@@ -10,7 +10,7 @@ class AppFooter extends StatelessWidget {
   void _onItemTapped(BuildContext context, int index) {
     switch (index) {
       case 0:
-        Navigator.pushNamed(context, AppRoutes.home);
+        Navigator.pushNamed(context, AppRoutes.homeView);
         break;
       case 1:
         Navigator.pushNamed(context, AppRoutes.info);
@@ -26,18 +26,22 @@ class AppFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) => _onItemTapped(context, index),
-      selectedItemColor: Colors.black,
-      unselectedItemColor: Colors.grey[700],
-      backgroundColor: Colors.white,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Início'),
-        BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Informações'),
-        BottomNavigationBarItem(icon: Icon(Icons.self_improvement), label: 'Meditação'),
-        BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notificações'),
-      ],
+    return Material(
+      color: Color(0xFFF7A48B), // Cor de fundo correta
+      child: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) => _onItemTapped(context, index),
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey[700],
+        backgroundColor: Colors.transparent, // Mantém transparente para o Material agir
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Início'),
+          BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Informações'),
+          BottomNavigationBarItem(icon: Icon(Icons.self_improvement), label: 'Meditação'),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notificações'),
+        ],
+      ),
     );
   }
+
 }

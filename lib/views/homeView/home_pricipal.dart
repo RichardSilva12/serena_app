@@ -9,33 +9,32 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFFABEE93),
         title: Text('Serena', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 20),
-          Center(
-            child: Image.asset('lib/assets/icons/serena_view.png', width: 200, height: 200),
-          ),
-          SizedBox(height: 20),
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-              padding: EdgeInsets.all(16),
-              children: [
-                _buildHomeButton(context, 'Meditação', 'lib/assets/icons/meditation.png', '/meditacao'),
-                _buildHomeButton(context, 'Respiração', 'lib/assets/icons/respiration.png', '/respiracao'),
-                _buildHomeButton(context, 'SOS', 'lib/assets/icons/sos.png', '/sos'),
-                _buildHomeButton(context, 'Quiz', 'lib/assets/icons/quiz.png', '/quiz'),
-                _buildHomeButton(context, 'Informações', 'lib/assets/icons/information.png', '/info'),
-                _buildHomeButton(context, 'Músicas', 'lib/assets/icons/music_meditation.png', '/musicas'),
-              ],
+      body: Container(
+        color: Color(0xFFFEF7D5), // Cor de fundo aplicada aqui
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                padding: EdgeInsets.all(16),
+                children: [
+                  _buildHomeButton(context, 'Meditação', 'lib/assets/icons/meditation.png', '/meditation'),
+                  _buildHomeButton(context, 'Respiração', 'lib/assets/icons/respiration.png', '/respiracao'),
+                  _buildSosButton(context, 'lib/assets/icons/sos.png', '/sos'),
+                  _buildHomeButton(context, 'Quiz', 'lib/assets/icons/quiz.png', '/quiz'),
+                  _buildHomeButton(context, 'Informações', 'lib/assets/icons/information.png', '/info'),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: AppFooter(currentIndex: 0), 
     );
@@ -45,18 +44,38 @@ class HomeView extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, route),
       child: Container(
+        width: 100,
+        height: 100,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 213, 185, 152),
-          borderRadius: BorderRadius.circular(16),
+          color: Color(0xFFABEE93),
+          shape: BoxShape.circle, // Deixando os botões circulares
           boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(imagePath, width: 60, height: 60),
-            SizedBox(height: 8),
-            Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Image.asset(imagePath, width: 90, height: 90), // Aumentando os ícones
+            SizedBox(height: 6),
+            Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSosButton(BuildContext context, String imagePath, String route) {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, route),
+      child: Container(
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          color: Color(0xFFABEE93),
+          shape: BoxShape.circle,
+          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)],
+        ),
+        child: Center(
+          child: Image.asset(imagePath, width: 90, height: 90), // Ajustando o ícone ao centro
         ),
       ),
     );
