@@ -16,6 +16,7 @@ class MeditationViewState extends State<MeditationView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFFFEF7D5),
         title: const Text('Meditação', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: IconButton(

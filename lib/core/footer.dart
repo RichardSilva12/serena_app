@@ -18,9 +18,7 @@ class AppFooter extends StatelessWidget {
       case 2:
         Navigator.pushNamed(context, AppRoutes.meditation);
         break;
-      case 3:
-        Navigator.pushNamed(context, AppRoutes.sos);
-        break;
+
     }
   }
 

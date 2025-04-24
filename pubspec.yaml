@@ -73,6 +73,11 @@ flutter:
     - lib/assets/icons/lua.png
     - lib/assets/music/relaxamento1.mp3
     - lib/assets/music/relaxamento2.mp3
+    - lib/assets/icons/respiracao_funda.png
+    - lib/assets/icons/contatos.png
+    - lib/assets/icons/emergencia.png
+    - lib/assets/icons/audio_calmante.png
+    - lib/assets/icons/dicas.png
   
 
   # The following line ensures that the Material Icons font is

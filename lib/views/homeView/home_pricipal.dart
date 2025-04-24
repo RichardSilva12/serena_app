@@ -26,8 +26,7 @@ class HomeView extends StatelessWidget {
                 padding: EdgeInsets.all(16),
                 children: [
                   _buildHomeButton(context, 'Meditação', 'lib/assets/icons/meditation.png', '/meditation'),
-                  _buildHomeButton(context, 'Respiração', 'lib/assets/icons/respiration.png', '/respiracao'),
-                  _buildSosButton(context, 'lib/assets/icons/sos.png', '/sos'),
+                  _buildHomeButton(context, 'Respiração', 'lib/assets/icons/respiration.png', '/breathing'),
                   _buildHomeButton(context, 'Quiz', 'lib/assets/icons/quiz.png', '/quiz'),
                   _buildHomeButton(context, 'Informações', 'lib/assets/icons/information.png', '/info'),
                 ],
@@ -58,24 +57,6 @@ class HomeView extends StatelessWidget {
             SizedBox(height: 6),
             Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSosButton(BuildContext context, String imagePath, String route) {
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, route),
-      child: Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          color: Color(0xFFABEE93),
-          shape: BoxShape.circle,
-          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)],
-        ),
-        child: Center(
-          child: Image.asset(imagePath, width: 90, height: 90), // Ajustando o ícone ao centro
         ),
       ),
     );
