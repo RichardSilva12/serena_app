@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../views/breathing/respiracao.dart';
 import '../views/home/home_page.dart';
 import '../views/homeView/home_pricipal.dart';
+import '../views/info/home_info.dart';
 import '../views/meditation/home_meditation.dart';
 import '../views/quiz/home_quiz.dart';
 import '../views/quiz/quiz_questions_view.dart';
-//import '../views/info/info_page.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -24,6 +24,6 @@ class AppRoutes {
     breathing: (context) => RespiracaoView(),
     quiz: (context) => QuizIntroView(),
     quizQuestions: (context) => QuizQuestionsView(),
-    //info: (context) => InfoPage(),
+    info: (context) => InfoView(),
   };
 }
