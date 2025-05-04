@@ -10,14 +10,15 @@ class MeditationView extends StatefulWidget {
 }
 
 class MeditationViewState extends State<MeditationView> {
-  bool isMusicMode = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFEF7D5),
-        title: const Text('Meditação', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Meditação',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -28,40 +29,29 @@ class MeditationViewState extends State<MeditationView> {
         children: [
           const SizedBox(height: 20),
 
-          // Alternador entre Meditação e Meditação com Música
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildToggleButton('Meditação', !isMusicMode, () {
-                setState(() => isMusicMode = false);
-              }),
-              const SizedBox(width: 10),
-              _buildToggleButton('Com Música', isMusicMode, () {
-                setState(() => isMusicMode = true);
-              }),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          // Imagem centralizada
-          Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
-                'lib/assets/images/imagem1.jpg',
-                width: 180,
-                height: 200,
-                fit: BoxFit.cover,
+          // Imagem aumentada
+          Flexible(
+            flex: 2,
+            child: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(
+                  'lib/assets/images/imagem1.jpg',
+                  width: 220,
+                  height: 260,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
           const SizedBox(height: 20),
 
-          // Seção dos botões ocupando o restante da tela
+          // Botões organizados em Grid
           Expanded(
+            flex: 3,
             child: Container(
               decoration: const BoxDecoration(
-                color: Color(0xFFDDEEC9), // Cor de fundo da seção
+                color: Color(0xFFDDEEC9),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
@@ -71,18 +61,15 @@ class MeditationViewState extends State<MeditationView> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
-                padding: const EdgeInsets.all(16),
-                children: isMusicMode
-                    ? [
-                        _buildMeditationButton(context, 'Relaxamento', 'lib/assets/icons/relax.png', '/'),
-                        _buildMeditationButton(context, 'Sono', 'lib/assets/icons/lua.png', '/'),
-                        _buildMeditationButton(context, 'Guiada', 'lib/assets/icons/meditation.png', '/'),
-                      ]
-                    : [
-                        _buildMeditationButton(context, 'Guiada', 'lib/assets/icons/meditation.png', '/'),
-                        _buildMeditationButton(context, 'Rápida 5 min', 'lib/assets/icons/timer.png', '/'),
-                        _buildMeditationButton(context, 'Categoria', 'lib/assets/icons/category.png', '/'),
-                      ],
+                padding: const EdgeInsets.all(32),
+                children: [
+                  _buildMeditationButton(context, 'Guiada', 'lib/assets/icons/meditation.png', '/guiaMeditacao'),
+                  _buildMeditationButton(context, 'Relaxamento', 'lib/assets/icons/relax.png', '/'),
+                  _buildMeditationButton(context, 'Sono', 'lib/assets/icons/lua.png', '/'),
+                  _buildMeditationButton(context, 'Rápida 5 min', 'lib/assets/icons/timer.png', '/'),
+                  _buildMeditationButton(context, 'Categoria', 'lib/assets/icons/category.png', '/'),
+                  _buildMeditationButton(context, 'Dicas', 'lib/assets/icons/dicas_meditation.png', '/dicasMeditacao'),
+                ],
               ),
             ),
           ),
@@ -92,36 +79,23 @@ class MeditationViewState extends State<MeditationView> {
     );
   }
 
-  Widget _buildToggleButton(String title, bool isSelected, VoidCallback onPressed) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected ? Colors.green : Colors.grey,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-      child: Text(title, style: const TextStyle(color: Colors.white)),
-    );
-  }
-
   Widget _buildMeditationButton(BuildContext context, String title, String imagePath, String route) {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, route),
       child: Container(
-        width: 100,
-        height: 100,
+        width: 50,
+        height: 50,
         decoration: BoxDecoration(
-          color: Color(0xFFABEE93),
-          shape: BoxShape.circle, // Deixando os botões circulares
+          color: const Color(0xFFABEE93),
+          shape: BoxShape.circle,
           boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(imagePath, width: 90, height: 90), // Aumentando os ícones
-            SizedBox(height: 6),
-            Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Image.asset(imagePath, width: 70, height: 70),
+            const SizedBox(height: 6),
+            Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ],
         ),
       ),

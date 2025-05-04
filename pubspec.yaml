@@ -78,6 +78,7 @@ flutter:
     - lib/assets/icons/emergencia.png
     - lib/assets/icons/audio_calmante.png
     - lib/assets/icons/dicas.png
+    - lib/assets/icons/dicas_meditation.png
   
 
   # The following line ensures that the Material Icons font is
