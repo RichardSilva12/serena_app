@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class MeditacaoCategoryView extends StatefulWidget {
-  const MeditacaoCategoryView({super.key});
+class RespiracaoPersonalizadaView extends StatefulWidget {
+  const RespiracaoPersonalizadaView({super.key});
 
   @override
-  State<MeditacaoCategoryView> createState() => _MeditacaoCategoryViewState();
+  State<RespiracaoPersonalizadaView> createState() => _RespiracaoPersonalizadaViewState();
 }
 
-class _MeditacaoCategoryViewState extends State<MeditacaoCategoryView> {
+class _RespiracaoPersonalizadaViewState extends State<RespiracaoPersonalizadaView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5FCE8),
       appBar: AppBar(
         backgroundColor: const Color(0xFFABEE93),
-        title: const Text('Categorias de Meditacao'),
+        title: const Text('Personalizada'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),

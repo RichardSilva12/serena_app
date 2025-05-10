@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class MeditacaoCategoryView extends StatefulWidget {
-  const MeditacaoCategoryView({super.key});
+class MeditacaoSonoView extends StatefulWidget {
+  const MeditacaoSonoView({super.key});
 
   @override
-  State<MeditacaoCategoryView> createState() => _MeditacaoCategoryViewState();
+  State<MeditacaoSonoView> createState() => _MeditacaoSonoViewState();
 }
 
-class _MeditacaoCategoryViewState extends State<MeditacaoCategoryView> {
+class _MeditacaoSonoViewState extends State<MeditacaoSonoView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5FCE8),
       appBar: AppBar(
         backgroundColor: const Color(0xFFABEE93),
-        title: const Text('Categorias de Meditacao'),
+        title: const Text('Sono'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),

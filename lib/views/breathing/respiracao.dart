@@ -44,11 +44,11 @@ class RespiracaoViewState extends State<RespiracaoView> {
                 padding: const EdgeInsets.all(16),
                 children: [
                   _buildBreathingButton(
-                      context, 'Relaxamento', 'lib/assets/icons/relax.png', '/'),
+                      context, '5 minutos', 'lib/assets/icons/5min.png', '/rapidaResp'),
                   _buildBreathingButton(
-                      context, 'Sono', 'lib/assets/icons/lua.png', '/'),
-                  _buildBreathingButton(context, 'Guiada',
-                      'lib/assets/icons/meditation.png', '/'),
+                      context, 'Quadratica', 'lib/assets/icons/quadratica_resp.png', '/quadraticaResp'),
+                  _buildBreathingButton(context, 'Personalizada',
+                      'lib/assets/icons/personalizado_resp.png', '/personalizadaResp'),
                 ],
               ),
             ),
