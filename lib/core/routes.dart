@@ -6,7 +6,11 @@ import '../views/breathing/rapida_resp/rapida_resp_view.dart';
 import '../views/breathing/respiracao.dart';
 import '../views/home/home_page.dart';
 import '../views/homeView/home_pricipal.dart';
+import '../views/info/autocuidado/autocuidao_view.dart';
+import '../views/info/educacao/educacao_view.dart';
+import '../views/info/ferrementas_bas/ferram_prat_view.dart';
 import '../views/info/home_info.dart';
+import '../views/info/tecn_relaxamento/tecn_relax_view.dart';
 import '../views/meditation/categories/category_meditation_view.dart';
 import '../views/meditation/dicas/dicas_tela.dart';
 import '../views/meditation/guided/guided_meditation_view.dart';
@@ -34,6 +38,11 @@ class AppRoutes {
   static const String personalizadaResp = '/personalizadaResp';
   static const String quadraticaResp = '/quadraticaResp';
   static const String rapidaResp = '/rapidaResp';
+  static const String infoFerramentas = '/infoFerramentas';
+  static const String infoAutocuidado = '/infoAutocuidado';
+  static const String infoRelaxamento = '/infoRelaxamento';
+  static const String infoEducacao = '/infoEducacao';
+
   
 
   static Map<String, WidgetBuilder> routes = {
@@ -53,5 +62,9 @@ class AppRoutes {
     personalizadaResp: (constex) => RespiracaoPersonalizadaView(),
     quadraticaResp: (context) => RespiracaoQuadraticaView(),
     rapidaResp: (context) => RespiracaoRapidaView(),
+    infoFerramentas: (context) => FerPraticaView(),
+    infoAutocuidado: (context) => InfoAutoViewView(),
+    infoRelaxamento: (context) => TencRelaxamentoView(),
+    infoEducacao: (context) => EduSaudeMentalView(),
   };
 }
