@@ -67,7 +67,6 @@ class MeditationViewState extends State<MeditationView> {
                   _buildMeditationButton(context, 'Relaxamento', 'lib/assets/icons/relax.png', '/relaxamentoMeditacao'),
                   _buildMeditationButton(context, 'Sono', 'lib/assets/icons/lua.png', '/sonoMeditacao'),
                   _buildMeditationButton(context, 'Rápida 5 min', 'lib/assets/icons/timer.png', '/rapidaMeditacao'),
-                  _buildMeditationButton(context, 'Categoria', 'lib/assets/icons/category.png', '/categoriaMeditacao'),
                   _buildMeditationButton(context, 'Dicas', 'lib/assets/icons/dicas_meditation.png', '/dicasMeditacao'),
                 ],
               ),

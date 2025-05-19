@@ -11,8 +11,9 @@ class MeditacaoGuiadaView extends StatefulWidget {
 
 class _MeditacaoGuiadaViewState extends State<MeditacaoGuiadaView> {
   bool isSoundOn = true;
+  bool isPaused = false;
   int currentStepIndex = 0;
-  late Timer timer;
+  Timer? timer;
 
   final List<String> guidedSteps = [
     'Sente-se confortavelmente e feche os olhos.',
@@ -28,17 +29,30 @@ class _MeditacaoGuiadaViewState extends State<MeditacaoGuiadaView> {
   @override
   void initState() {
     super.initState();
+    startMeditation();
+  }
+
+  void startMeditation() {
     timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      setState(() {
-        currentStepIndex = (currentStepIndex + 1) % guidedSteps.length;
-      });
+      if (!isPaused) {
+        setState(() {
+          currentStepIndex = (currentStepIndex + 1) % guidedSteps.length;
+        });
+      }
     });
   }
 
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
+  void togglePause() {
+    setState(() {
+      isPaused = !isPaused;
+    });
+  }
+
+  void restartMeditation() {
+    setState(() {
+      currentStepIndex = 0;
+      isPaused = false;
+    });
   }
 
   void toggleSound() {
@@ -46,7 +60,13 @@ class _MeditacaoGuiadaViewState extends State<MeditacaoGuiadaView> {
       isSoundOn = !isSoundOn;
     });
 
-    // Aqui você pode incluir lógica real para ligar/desligar um áudio, se necessário.
+    // Aqui você pode adicionar o controle real do áudio
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -64,7 +84,7 @@ class _MeditacaoGuiadaViewState extends State<MeditacaoGuiadaView> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Dica que aparece a cada 10 segundos
+          // Texto de meditação atual
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
             child: Text(
@@ -77,9 +97,48 @@ class _MeditacaoGuiadaViewState extends State<MeditacaoGuiadaView> {
             ),
           ),
 
+          const SizedBox(height: 20),
+
+          // Estado atual (rodando, pausado)
+          Text(
+            isPaused ? 'Pausado' : 'Em andamento...',
+            style: TextStyle(
+              fontSize: 16,
+              color: isPaused ? Colors.red : Colors.green,
+            ),
+          ),
+
           const Spacer(),
 
-          // Ícone de som central
+          // Botões principais
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Botão Pausar/Reiniciar
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFABEE93),
+                ),
+                onPressed: togglePause,
+                icon: Icon(isPaused ? Icons.play_arrow : Icons.pause),
+                label: Text(isPaused ? 'Retomar' : 'Pausar'),
+              ),
+              const SizedBox(width: 16),
+              // Botão Reiniciar
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFABEE93),
+                ),
+                onPressed: restartMeditation,
+                icon: const Icon(Icons.restart_alt),
+                label: const Text('Reiniciar'),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 30),
+
+          // Botão de som
           GestureDetector(
             onTap: toggleSound,
             child: Container(

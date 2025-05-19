@@ -10,13 +10,13 @@ class RespiracaoRapidaView extends StatefulWidget {
 }
 
 class _RespiracaoRapidaViewState extends State<RespiracaoRapidaView> {
-  late Timer _timer;
+  Timer? _timer;
   int _remainingSeconds = 5 * 60;
   bool _isRunning = false;
   bool _isPaused = false;
 
-  int _faseIndex = 0; // 0 = fase 3s, 1 = fase 4s, 2 = fase 5s
-  int _etapaIndex = 0; // 0 = Inspire, 1 = Segure, 2 = Expire
+  int _faseIndex = 0;
+  int _etapaIndex = 0;
   int _etapaTimeLeft = 0;
   String _faseTexto = 'Pronto para começar?';
   bool _emPausaEntreFases = false;
@@ -45,7 +45,7 @@ class _RespiracaoRapidaViewState extends State<RespiracaoRapidaView> {
       setState(() {
         if (_remainingSeconds <= 0) {
           _faseTexto = 'Prática concluída!';
-          _timer.cancel();
+          timer.cancel();
           _isRunning = false;
           return;
         }
@@ -72,17 +72,15 @@ class _RespiracaoRapidaViewState extends State<RespiracaoRapidaView> {
           _etapaIndex++;
 
           if (_etapaIndex >= 3) {
-            // Final da fase, ir para pausa de 5s antes da próxima
             _faseIndex++;
             if (_faseIndex >= _fases.length) {
-              _faseIndex = 0; // reinicia ciclo de fases
+              _faseIndex = 0;
             }
             _etapaIndex = 0;
             _emPausaEntreFases = true;
             _pausaEntreFases = 5;
             _faseTexto = 'Pausa...';
           } else {
-            // Avança para próxima etapa da fase
             _etapaTimeLeft = _fases[_faseIndex][_etapaIndex];
             _faseTexto = _etapas[_etapaIndex];
           }
@@ -98,7 +96,7 @@ class _RespiracaoRapidaViewState extends State<RespiracaoRapidaView> {
   }
 
   void _resetTimer() {
-    if (_timer.isActive) _timer.cancel();
+    _timer?.cancel();
 
     setState(() {
       _remainingSeconds = 5 * 60;
@@ -121,7 +119,7 @@ class _RespiracaoRapidaViewState extends State<RespiracaoRapidaView> {
 
   @override
   void dispose() {
-    if (_timer.isActive) _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -153,9 +151,9 @@ class _RespiracaoRapidaViewState extends State<RespiracaoRapidaView> {
               const SizedBox(height: 30),
               Container(
                 padding: const EdgeInsets.all(40),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color.fromARGB(255, 237, 54, 17),
+                  color: Color.fromARGB(255, 237, 54, 17),
                 ),
                 child: Text(
                   _formatTime(_remainingSeconds),
