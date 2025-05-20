@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../views/breathing/personalizada_resp/personalizada_resp_view.dart';
+import '../views/breathing/personalizada_resp/sessao_respiracao_view.dart';
 import '../views/breathing/quadratica_resp/quadratica_resp_view.dart';
 import '../views/breathing/rapida_resp/rapida_resp_view.dart';
 import '../views/breathing/respiracao.dart';
@@ -41,6 +42,7 @@ class AppRoutes {
   static const String infoAutocuidado = '/infoAutocuidado';
   static const String infoRelaxamento = '/infoRelaxamento';
   static const String infoEducacao = '/infoEducacao';
+  static const String sessaoResp = '/sessao-respiracao';
 
   
 
@@ -65,5 +67,6 @@ class AppRoutes {
     infoAutocuidado: (context) => InfoAutoViewView(),
     infoRelaxamento: (context) => TencRelaxamentoView(),
     infoEducacao: (context) => InfoAutoViewView(),
+    sessaoResp: (contest) => SessaoRespiracaoView(), 
   };
 }
