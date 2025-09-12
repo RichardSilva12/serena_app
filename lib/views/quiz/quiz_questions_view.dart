@@ -36,6 +36,22 @@ class _QuizQuestionsViewState extends State<QuizQuestionsView> {
         {'text': 'Com frequência', 'value': 2},
       ]
     },
+    {
+      'question': 'Você sente dificuldade para se concentrar nas tarefas?',
+      'options': [
+        {'text': 'Não, foco normalmente', 'value': 0},
+        {'text': 'Às vezes me distraio', 'value': 1},
+        {'text': 'Quase sempre me distraio', 'value': 2},
+      ]
+    },
+    {
+      'question': 'Tem se sentido desmotivado(a) ultimamente?',
+      'options': [
+        {'text': 'Não, estou motivado(a)', 'value': 0},
+        {'text': 'Depende do dia', 'value': 1},
+        {'text': 'Sim, totalmente desmotivado(a)', 'value': 2},
+      ]
+    },
   ];
 
   void _answerQuestion(int value) {
@@ -50,36 +66,39 @@ class _QuizQuestionsViewState extends State<QuizQuestionsView> {
   }
 
   void _showResult() {
+   WidgetsBinding.instance.addPostFrameCallback((_) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) {
-          if (_score <= 2) {
+          if (_score <= 4) {
             return _buildResultScreen(
               'Você está bem!',
               'Que ótimo! Continue mantendo sua mente tranquila. Que tal uma meditação para manter o equilíbrio?',
               'Começar Meditação',
-              '/meditacao',
+              '/meditation',
             );
-          } else if (_score <= 4) {
+          } else if (_score <= 7) {
             return _buildResultScreen(
               'Atenção!',
-              'Você está um pouco sobrecarregado(a). Vamos fazer um exercício de respiração e meditação guiada?',
+              'Você está um pouco sobrecarregado(a). Vamos fazer um exercício de respiração?',
               'Começar Respiração',
-              '/respiracao',
+              '/breathing',
             );
           } else {
             return _buildResultScreen(
               'Cuidado!',
               'Seu nível emocional está crítico. Recomendamos buscar apoio profissional. Veja os contatos disponíveis.',
               'Ver Contatos',
-              '/contatos',
+              '/contacts',
             );
           }
         },
       ),
     );
+   });
   }
+
 
   Widget _buildResultScreen(String title, String description, String buttonText, String route) {
     return Scaffold(
@@ -106,7 +125,7 @@ class _QuizQuestionsViewState extends State<QuizQuestionsView> {
             const SizedBox(height: 40),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
+                backgroundColor: const Color(0xFFA8E6A1),
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               ),
               onPressed: () => Navigator.pushNamed(context, route),
@@ -151,11 +170,12 @@ class _QuizQuestionsViewState extends State<QuizQuestionsView> {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlueAccent,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    backgroundColor: const Color(0xFFA8E6A1),
+                    padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
                   ),
                   onPressed: () => _answerQuestion(option['value']),
-                  child: Text(option['text'], style: const TextStyle(fontSize: 16)),
+                  child: Text(option['text'], style: const TextStyle(fontSize: 16, color: Colors.black, // Texto preto
+                  fontWeight: FontWeight.bold,)),
                 ),
               );
             }).toList(),

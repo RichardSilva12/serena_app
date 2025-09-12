@@ -8,8 +8,9 @@ class InfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFFFF5E1),
       appBar: AppBar(
+         automaticallyImplyLeading: false, // 🔹 remove a seta padrão do lado esquerdo
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
@@ -17,10 +18,6 @@ class InfoView extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.arrow_back),
@@ -88,16 +85,25 @@ class InfoView extends StatelessWidget {
         ),
       const SizedBox(height: 10),
       if (showButton)
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.orange[400],
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+        Center(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFA8E6A1), // Verde claro
+              padding: const EdgeInsets.symmetric(horizontal: 102, vertical: 18),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            onPressed: () => Navigator.pushNamed(context, routeName),
+            child: const Text(
+              'Saiba mais',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black, // Texto preto
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          onPressed: () => Navigator.pushNamed(context, routeName),
-          child: const Text('Saiba mais', style: TextStyle(fontSize: 16)),
         ),
       const SizedBox(height: 30),
       ],

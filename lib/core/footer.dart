@@ -36,7 +36,10 @@ class AppFooter extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Início'),
           BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Informações'),
           BottomNavigationBarItem(icon: Icon(Icons.self_improvement), label: 'Meditação'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notificações'),
+          BottomNavigationBarItem(
+          icon: Icon(Icons.air), // ou use outro ícone relacionado à respiração
+          label: 'Respiração',
+          ),
         ],
       ),
     );

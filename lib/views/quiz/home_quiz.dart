@@ -10,6 +10,7 @@ class QuizIntroView extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
+        automaticallyImplyLeading: false, // 🔹 remove a seta padrão do lado esquerdo
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
@@ -17,10 +18,7 @@ class QuizIntroView extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {}, // Implementar Drawer se quiser
-        ),
+        
         actions: [
           IconButton(
             icon: const Icon(Icons.arrow_back),
@@ -53,14 +51,15 @@ class QuizIntroView extends StatelessWidget {
               const SizedBox(height: 40),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange[400],
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  backgroundColor: const Color(0xFFA8E6A1),
+                  padding: const EdgeInsets.symmetric(horizontal: 102, vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 onPressed: () => Navigator.pushNamed(context, '/quizQuestions'),
-                child: const Text('Iniciar', style: TextStyle(fontSize: 18)),
+                child: const Text('Iniciar', style: TextStyle(fontSize: 18, color: Colors.black, // Texto preto
+                fontWeight: FontWeight.bold)),
               ),
               const SizedBox(height: 20),
             ],
