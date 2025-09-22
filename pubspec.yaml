@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   carousel_slider: 4.2.1
   percent_indicator: ^4.2.5
+  just_audio: ^0.9.42
+  just_audio_background: ^0.0.1-beta.12
 
 
 dev_dependencies:
@@ -83,6 +85,7 @@ flutter:
     - lib/assets/icons/5min.png
     - lib/assets/icons/quadratica_resp.png
     - lib/assets/icons/personalizado_resp.png
+    - lib/assets/music/audio_guiado.mp3
   
 
   # The following line ensures that the Material Icons font is
