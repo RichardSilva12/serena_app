@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 
 class MeditacaoSonoView extends StatefulWidget {
   const MeditacaoSonoView({super.key});
@@ -16,6 +18,8 @@ class _MeditacaoSonoViewState extends State<MeditacaoSonoView> {
   Timer? _timer;
   int _tempoRestante = 0;
 
+  final AudioPlayer _player = AudioPlayer();
+
   final Map<String, String> sons = {
     'Chuva': '🌧️',
     'Mar': '🌊',
@@ -23,53 +27,84 @@ class _MeditacaoSonoViewState extends State<MeditacaoSonoView> {
     'Lareira': '🔥',
   };
 
-  void selecionarSom(String nome) {
-    setState(() {
-      somSelecionado = nome;
-      isPlaying = true;
-      _tempoRestante = tempoSelecionado * 60;
-    });
-    iniciarTemporizador();
-    // Aqui você poderá tocar o som usando audioplayers no futuro
-  }
+  // Caminhos dos sons (adicione os arquivos no pubspec.yaml)
+  final Map<String, String> _audioFiles = {
+    'Chuva': 'assets/sounds/chuva.mp3',
+    'Mar': 'assets/sounds/mar.mp3',
+    'Floresta': 'assets/sounds/floresta.mp3',
+    'Lareira': 'assets/sounds/lareira.mp3',
+  };
 
-  void pausarSom() {
-    setState(() {
-      isPlaying = !isPlaying;
-    });
+  Future<void> selecionarSom(String nome) async {
+    _timer?.cancel();
+    await _player.stop();
 
-    if (isPlaying) {
+    final path = _audioFiles[nome];
+    if (path == null) return;
+
+    try {
+      await _player.setAudioSource(
+        AudioSource.asset(
+          path,
+          tag: MediaItem(
+            id: nome,
+            album: "Serena - Sons Relaxantes",
+            title: nome,
+          ),
+        ),
+      );
+      await _player.setLoopMode(LoopMode.one);
+
+      await _player.play();
+
+      setState(() {
+        somSelecionado = nome;
+        isPlaying = true;
+        _tempoRestante = tempoSelecionado * 60;
+      });
+
       iniciarTemporizador();
-      // Retomar som
-    } else {
-      _timer?.cancel();
-      // Pausar som
+    } catch (e) {
+      debugPrint("Erro ao carregar som: $e");
     }
   }
 
-  void reiniciarSom() {
+  Future<void> pausarSom() async {
+    if (isPlaying) {
+      await _player.pause();
+      _timer?.cancel();
+    } else {
+      await _player.play();
+      iniciarTemporizador();
+    }
+    setState(() {
+      isPlaying = !isPlaying;
+    });
+  }
+
+  Future<void> reiniciarSom() async {
+    await _player.stop();
     _timer?.cancel();
     setState(() {
       somSelecionado = null;
       isPlaying = false;
       _tempoRestante = 0;
     });
-    // Parar som completamente
   }
 
   void iniciarTemporizador() {
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (_tempoRestante > 0 && isPlaying) {
         setState(() {
           _tempoRestante--;
         });
       } else {
         timer.cancel();
+        await _player.stop();
         setState(() {
           isPlaying = false;
         });
-        // Aqui você para o som ao final do tempo
       }
     });
   }
@@ -80,7 +115,7 @@ class _MeditacaoSonoViewState extends State<MeditacaoSonoView> {
       builder: (_) {
         return Column(
           mainAxisSize: MainAxisSize.min,
-          children: [15, 30].map((tempo) {
+          children: [15, 30, 60].map((tempo) {
             return ListTile(
               title: Text('$tempo minutos'),
               onTap: () {
@@ -107,6 +142,7 @@ class _MeditacaoSonoViewState extends State<MeditacaoSonoView> {
   @override
   void dispose() {
     _timer?.cancel();
+    _player.dispose();
     super.dispose();
   }
 
@@ -119,10 +155,11 @@ class _MeditacaoSonoViewState extends State<MeditacaoSonoView> {
         title: const Text('Sono'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            _timer?.cancel();
-            Navigator.pop(context);
-          },
+            onPressed: () {
+              _timer?.cancel();
+              _player.stop(); // sem await, roda em paralelo
+              Navigator.pop(context);
+            },
         ),
       ),
       body: Padding(

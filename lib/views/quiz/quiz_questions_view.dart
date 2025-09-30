@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serena_app/core/routes.dart';
 
 class QuizQuestionsView extends StatefulWidget {
   const QuizQuestionsView({super.key});
@@ -76,21 +77,21 @@ class _QuizQuestionsViewState extends State<QuizQuestionsView> {
               'Você está bem!',
               'Que ótimo! Continue mantendo sua mente tranquila. Que tal uma meditação para manter o equilíbrio?',
               'Começar Meditação',
-              '/meditation',
+              AppRoutes.meditation,
             );
           } else if (_score <= 7) {
             return _buildResultScreen(
               'Atenção!',
               'Você está um pouco sobrecarregado(a). Vamos fazer um exercício de respiração?',
               'Começar Respiração',
-              '/breathing',
+              AppRoutes.breathing,
             );
           } else {
             return _buildResultScreen(
               'Cuidado!',
               'Seu nível emocional está crítico. Recomendamos buscar apoio profissional. Veja os contatos disponíveis.',
               'Ver Contatos',
-              '/contacts',
+              AppRoutes.contatos,
             );
           }
         },

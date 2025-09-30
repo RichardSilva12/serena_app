@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 
 class MeditacaoRelaxView extends StatefulWidget {
   const MeditacaoRelaxView({super.key});
@@ -10,38 +12,78 @@ class MeditacaoRelaxView extends StatefulWidget {
 }
 
 class _MeditacaoRelaxViewState extends State<MeditacaoRelaxView> {
-  int? _selectedTimer;
+  int? _selectedTimer; // 10, 20, 30 minutos
   bool _isPlaying = false;
   Timer? _autoStopTimer;
 
   String? _selectedSound;
+  late AudioPlayer _player;
 
-  void _selectTimer(int? minutes) {
-    setState(() {
-      _selectedTimer = minutes;
-    });
+  final Map<String, String> soundFiles = {
+    "Vento": "lib/assets/music/nevasca_vento.mp3",
+    "Harpa": "lib/assets/music/harpa.mp3",
+    "Tigela": "lib/assets/music/tigela.mp3",
+    "Piano": "lib/assets/music/piano.mp3",
+    "Natureza": "lib/assets/music/natureza.mp3",
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _player = AudioPlayer();
   }
 
-  void _selectSound(String soundName) {
-    setState(() {
-      _selectedSound = soundName;
-    });
+  Future<void> _playSelectedSound() async {
+    if (_selectedSound == null) return;
+
+    final filePath = soundFiles[_selectedSound]!;
+    await _player.setAudioSource(
+      AudioSource.asset(
+        filePath,
+        tag: MediaItem(
+          id: _selectedSound!,
+          album: "Relaxamento",
+          title: _selectedSound!,
+          artist: "App Serena",
+        ),
+      ),
+    );
+
+    // Loop infinito (até o timer mandar parar)
+    await _player.setLoopMode(LoopMode.one);
+    await _player.play();
   }
 
-  void _togglePlay() {
+  void _togglePlay() async {
+    if (_selectedSound == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Selecione um som primeiro.")),
+      );
+      return;
+    }
+    if (_selectedTimer == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Selecione um tempo.")),
+      );
+      return;
+    }
+
     setState(() {
       _isPlaying = !_isPlaying;
     });
 
     if (_isPlaying) {
+      await _playSelectedSound();
       _startAutoStopTimer();
     } else {
+      _player.pause();
       _stopTimer();
     }
   }
 
   void _reset() {
     _stopTimer();
+    _player.stop();
     setState(() {
       _isPlaying = false;
       _selectedTimer = null;
@@ -53,6 +95,7 @@ class _MeditacaoRelaxViewState extends State<MeditacaoRelaxView> {
     _autoStopTimer?.cancel();
     if (_selectedTimer != null) {
       _autoStopTimer = Timer(Duration(minutes: _selectedTimer!), () {
+        _player.stop();
         setState(() {
           _isPlaying = false;
         });
@@ -70,6 +113,7 @@ class _MeditacaoRelaxViewState extends State<MeditacaoRelaxView> {
   @override
   void dispose() {
     _stopTimer();
+    _player.dispose();
     super.dispose();
   }
 
@@ -77,14 +121,15 @@ class _MeditacaoRelaxViewState extends State<MeditacaoRelaxView> {
     final bool isSelected = _selectedSound == label;
 
     return ElevatedButton.icon(
-      onPressed: () => _selectSound(label),
+      onPressed: () => setState(() => _selectedSound = label),
       icon: Icon(icon, color: isSelected ? Colors.white : Colors.black87),
       label: Text(
         label,
         style: TextStyle(color: isSelected ? Colors.white : Colors.black87),
       ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected ? const Color(0xFFABEE93) : Colors.grey[200],
+        backgroundColor:
+            isSelected ? const Color(0xFFABEE93) : Colors.grey[200],
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       ),
     );
@@ -140,11 +185,6 @@ class _MeditacaoRelaxViewState extends State<MeditacaoRelaxView> {
               spacing: 10,
               children: [
                 ChoiceChip(
-                  label: const Text("Sem timer"),
-                  selected: _selectedTimer == null,
-                  onSelected: (_) => _selectTimer(null),
-                ),
-                ChoiceChip(
                   label: const Text("10 min"),
                   selected: _selectedTimer == 10,
                   onSelected: (_) => _selectTimer(10),
@@ -165,13 +205,25 @@ class _MeditacaoRelaxViewState extends State<MeditacaoRelaxView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                  icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow, size: 40),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFABEE93),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
+                  label: Text(_isPlaying ? "Pausar" : "Começar"),
                   onPressed: _togglePlay,
                 ),
                 const SizedBox(width: 30),
-                IconButton(
-                  icon: const Icon(Icons.refresh, size: 40),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  icon: const Icon(Icons.refresh),
+                  label: const Text("Resetar"),
                   onPressed: _reset,
                 ),
               ],
@@ -186,5 +238,11 @@ class _MeditacaoRelaxViewState extends State<MeditacaoRelaxView> {
         ),
       ),
     );
+  }
+
+  void _selectTimer(int? minutes) {
+    setState(() {
+      _selectedTimer = minutes;
+    });
   }
 }

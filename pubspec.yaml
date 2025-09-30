@@ -38,6 +38,7 @@ dependencies:
   percent_indicator: ^4.2.5
   just_audio: ^0.9.42
   just_audio_background: ^0.0.1-beta.12
+  url_launcher: ^6.3.0
 
 
 dev_dependencies:
@@ -74,8 +75,6 @@ flutter:
     - lib/assets/images/imagem3.jpg
     - lib/assets/icons/relax.png
     - lib/assets/icons/lua.png
-    - lib/assets/music/relaxamento1.mp3
-    - lib/assets/music/relaxamento2.mp3
     - lib/assets/icons/respiracao_funda.png
     - lib/assets/icons/contatos.png
     - lib/assets/icons/emergencia.png
@@ -86,6 +85,19 @@ flutter:
     - lib/assets/icons/quadratica_resp.png
     - lib/assets/icons/personalizado_resp.png
     - lib/assets/music/audio_guiado.mp3
+    - lib/assets/music/chuva.mp3
+    - lib/assets/music/floresta.mp3
+    - lib/assets/music/harpa.mp3
+    - lib/assets/music/lareira.mp3
+    - lib/assets/music/natureza.mp3
+    - lib/assets/music/piano.mp3
+    - lib/assets/music/tigela.mp3
+    - lib/assets/music/nevasca_vento.mp3
+    - lib/assets/music/mar.mp3
+    - lib/assets/icons_principal/serena_icon.png
+    - lib/assets/icons_principal/logo_unisagrado.jpg
+    - lib/assets/icons_principal/unisagrado-transparente.png
+
   
 
   # The following line ensures that the Material Icons font is
@@ -93,6 +105,13 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+
+# 👇 Aqui fora da seção flutter:
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/assets/icons_principal/serena_icon.png"
+  
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

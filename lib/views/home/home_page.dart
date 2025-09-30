@@ -49,32 +49,31 @@ class HomePageState extends State<HomePage> {
             ),
           ),
 
-          // Conteúdo da tela (botão e imagem)
+          // Conteúdo da tela (botão, imagem e logo)
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 20),
 
-              // Ícone Centralizado CORRETAMENTE
               Center(
                 child: Image.asset(
-                  'lib/assets/icons/serena.png', // Caminho correto da imagem
+                  'lib/assets/icons/serena.png',
                   width: 500,
                   height: 400,
                 ),
               ),
               const SizedBox(height: 40),
 
-              // Botão "Começar" com animação
+              // Botão COMEÇAR
               GestureDetector(
                 onTapDown: (_) {
                   setState(() {
-                    _scale = 0.9; // Diminuir o tamanho ao pressionar
+                    _scale = 0.9;
                   });
                 },
                 onTapUp: (_) {
                   setState(() {
-                    _scale = 1.0; // Retornar ao tamanho original após pressionar
+                    _scale = 1.0;
                   });
                 },
                 onTap: () {
@@ -101,7 +100,28 @@ class HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+
+              const SizedBox(height: 30),
+
+              // Logo da faculdade
+              Image.asset(
+                'lib/assets/icons_principal/unisagrado-transparente.png', // coloque sua logo em assets
+                width: 150,
+                height: 100,
+              ),
             ],
+          ),
+
+          // Botão de informação no canto inferior esquerdo
+          Positioned(
+            bottom: 20,
+            left: 20,
+            child: IconButton(
+              icon: const Icon(Icons.info, size: 32, color: Colors.black87),
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.sobre);
+              },
+            ),
           ),
         ],
       ),

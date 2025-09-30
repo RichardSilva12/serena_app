@@ -6,23 +6,25 @@ import '../views/breathing/quadratica_resp/quadratica_resp_view.dart';
 import '../views/breathing/rapida_resp/rapida_resp_view.dart';
 import '../views/breathing/respiracao.dart';
 import '../views/home/home_page.dart';
+import '../views/home/home_sobre.dart';
 import '../views/homeView/home_pricipal.dart';
 import '../views/info/autocuidado/autocuidao_view.dart';
 import '../views/info/ferrementas_bas/ferram_prat_view.dart';
 import '../views/info/home_info.dart';
 import '../views/info/tecn_relaxamento/tecn_relax_view.dart';
-import '../views/meditation/categories/category_meditation_view.dart';
-import '../views/meditation/dicas/dicas_tela.dart';
 import '../views/meditation/guided/guided_meditation_view.dart';
 import '../views/meditation/home_meditation.dart';
 import '../views/meditation/quick/quick_meditation_view.dart';
 import '../views/meditation/relax/relax_meditation_view.dart';
 import '../views/meditation/sono/sono_meditation_view.dart';
+import '../views/quiz/contatos.dart';
 import '../views/quiz/home_quiz.dart';
 import '../views/quiz/quiz_questions_view.dart';
 
+
 class AppRoutes {
   static const String home = '/';
+  static const String sobre = '/sobre';
   static const String homeView = '/homeView';
   static const String meditation = '/meditation';
   static const String breathing = '/breathing';
@@ -43,6 +45,7 @@ class AppRoutes {
   static const String infoRelaxamento = '/infoRelaxamento';
   static const String infoEducacao = '/infoEducacao';
   static const String sessaoResp = '/sessao-respiracao';
+  static const String contatos = '/contatos';
 
   
 
@@ -54,10 +57,8 @@ class AppRoutes {
     quiz: (context) => QuizIntroView(),
     quizQuestions: (context) => QuizQuestionsView(),
     info: (context) => InfoView(),
-    dicasMeditacao: (context) => MeditacaoDicasView(),
     guiaMeditacao: (context) => MeditacaoGuiadaView(),
     rapidaMeditacao: (context) => MeditacaoQuickView(),
-    categoriaMeditacao: (context) => MeditacaoCategoryView(),
     sonoMeditacao: (context) => MeditacaoSonoView(),
     relaxamentoMeditacao: (context) => MeditacaoRelaxView(),
     personalizadaResp: (constex) => RespiracaoPersonalizadaView(),
@@ -68,5 +69,8 @@ class AppRoutes {
     infoRelaxamento: (context) => TencRelaxamentoView(),
     infoEducacao: (context) => InfoAutoViewView(),
     sessaoResp: (contest) => SessaoRespiracaoView(), 
+    sobre: (contest) => SobreSerenaView(),
+    contatos: (contest) => ContatosMedicosView(),
+
   };
 }
