@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/footer.dart'; // Importa seu footer
+import '../../core/footer.dart'; 
 
 class QuizIntroView extends StatelessWidget {
   const QuizIntroView({super.key});
@@ -10,7 +10,7 @@ class QuizIntroView extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        automaticallyImplyLeading: false, // 🔹 remove a seta padrão do lado esquerdo
+        automaticallyImplyLeading: false, 
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(

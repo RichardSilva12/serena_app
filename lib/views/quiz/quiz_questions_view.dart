@@ -77,21 +77,21 @@ class _QuizQuestionsViewState extends State<QuizQuestionsView> {
               'Você está bem!',
               'Que ótimo! Continue mantendo sua mente tranquila. Que tal uma meditação para manter o equilíbrio?',
               'Começar Meditação',
-              AppRoutes.meditation,
+              () => Navigator.pushNamed(context, AppRoutes.meditation),
             );
           } else if (_score <= 7) {
             return _buildResultScreen(
               'Atenção!',
               'Você está um pouco sobrecarregado(a). Vamos fazer um exercício de respiração?',
               'Começar Respiração',
-              AppRoutes.breathing,
+              () => Navigator.pushNamed(context, AppRoutes.breathing),
             );
           } else {
             return _buildResultScreen(
               'Cuidado!',
               'Seu nível emocional está crítico. Recomendamos buscar apoio profissional. Veja os contatos disponíveis.',
               'Ver Contatos',
-              AppRoutes.contatos,
+              () => Navigator.pushNamed(context, AppRoutes.contatos),
             );
           }
         },
@@ -101,42 +101,48 @@ class _QuizQuestionsViewState extends State<QuizQuestionsView> {
   }
 
 
-  Widget _buildResultScreen(String title, String description, String buttonText, String route) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Resultado'),
-        centerTitle: true,
+  Widget _buildResultScreen(
+  String title,
+  String description,
+  String buttonText,
+  VoidCallback onPressed,
+  ) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Resultado'),
+      centerTitle: true,
+    ),
+    body: Padding(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            description,
+            style: const TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 40),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFA8E6A1),
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            ),
+            onPressed: onPressed, // ✅ agora usa a função passada
+            child: Text(buttonText, style: const TextStyle(fontSize: 18)),
+          ),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              description,
-              style: const TextStyle(fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFA8E6A1),
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              ),
-              onPressed: () => Navigator.pushNamed(context, route),
-              child: Text(buttonText, style: const TextStyle(fontSize: 18)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {

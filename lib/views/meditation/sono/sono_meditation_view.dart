@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 
 class MeditacaoSonoView extends StatefulWidget {
   const MeditacaoSonoView({super.key});
@@ -43,16 +42,8 @@ class _MeditacaoSonoViewState extends State<MeditacaoSonoView> {
     if (path == null) return;
 
     try {
-      await _player.setAudioSource(
-        AudioSource.asset(
-          path,
-          tag: MediaItem(
-            id: nome,
-            album: "Serena - Sons Relaxantes",
-            title: nome,
-          ),
-        ),
-      );
+      
+      await _player.setAsset(path);
       await _player.setLoopMode(LoopMode.one);
 
       await _player.play();
