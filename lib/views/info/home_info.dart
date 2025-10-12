@@ -10,20 +10,17 @@ class InfoView extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFFF5E1),
       appBar: AppBar(
-         automaticallyImplyLeading: false, // 🔹 remove a seta padrão do lado esquerdo
-        backgroundColor: Colors.transparent,
+         backgroundColor: Colors.transparent,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: const Text(
           'INFORMAÇÕES',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),

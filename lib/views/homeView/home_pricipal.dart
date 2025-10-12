@@ -139,7 +139,7 @@ class HomeView extends StatelessWidget {
       onTap: () => Navigator.pushNamed(context, route),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFFABEE93),
+          color:const Color.fromARGB(185, 171, 238, 147),
           borderRadius: BorderRadius.circular(30),
           boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)],
         ),
