@@ -98,7 +98,7 @@ class MeditationViewState extends State<MeditationView> {
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xFFABEE93), // verde destacado nos botões
-          shape: BoxShape.circle,
+          borderRadius: BorderRadius.circular(30),
           boxShadow: const [
             BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(2, 2)),
           ],
@@ -106,7 +106,7 @@ class MeditationViewState extends State<MeditationView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(imagePath, width: 60, height: 60),
+            Image.asset(imagePath, width: 90, height: 90),
             const SizedBox(height: 8),
             Text(
               title,

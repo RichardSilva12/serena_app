@@ -9,6 +9,7 @@ import '../views/home/home_page.dart';
 import '../views/home/home_sobre.dart';
 import '../views/homeView/home_pricipal.dart';
 import '../views/info/autocuidado/autocuidao_view.dart';
+import '../views/info/educacao/educacao_view.dart';
 import '../views/info/ferrementas_bas/ferram_prat_view.dart';
 import '../views/info/home_info.dart';
 import '../views/info/tecn_relaxamento/tecn_relax_view.dart';
@@ -67,7 +68,7 @@ class AppRoutes {
     infoFerramentas: (context) => FerPraticaView(),
     infoAutocuidado: (context) => InfoAutoViewView(),
     infoRelaxamento: (context) => TencRelaxamentoView(),
-    infoEducacao: (context) => InfoAutoViewView(),
+    infoEducacao: (context) => EduSaudeMentalView(),
     sessaoResp: (contest) => SessaoRespiracaoView(), 
     sobre: (contest) => SobreSerenaView(),
     contatos: (contest) => ContatosMedicosView(),

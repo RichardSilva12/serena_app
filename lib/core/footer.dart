@@ -21,31 +21,34 @@ class AppFooter extends StatelessWidget {
       case 3:
         Navigator.pushNamed(context, AppRoutes.breathing);
         break;
-
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Color(0xFFF7A48B), // Cor de fundo correta
-      child: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => _onItemTapped(context, index),
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey[700],
-        backgroundColor: Colors.transparent, // Mantém transparente para o Material agir
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Início'),
-          BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Informações'),
-          BottomNavigationBarItem(icon: Icon(Icons.self_improvement), label: 'Meditação'),
-          BottomNavigationBarItem(
-          icon: Icon(Icons.air), // ou use outro ícone relacionado à respiração
-          label: 'Respiração',
-          ),
-        ],
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(10),
+        topRight: Radius.circular(10),
+      ),
+      child: Material(
+        color: const Color(0xFFABEE93), // Cor de fundo
+        elevation: 10, // dá um leve sombreamento para destacar o footer
+        child: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (index) => _onItemTapped(context, index),
+          selectedItemColor: Colors.black,
+          unselectedItemColor: const Color.fromARGB(255, 0, 0, 0),
+          backgroundColor:const Color(0xFFABEE93), // mantém a cor consistente
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Início'),
+            BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Informações'),
+            BottomNavigationBarItem(icon: Icon(Icons.self_improvement), label: 'Meditação'),
+            BottomNavigationBarItem(icon: Icon(Icons.air), label: 'Respiração'),
+          ],
+        ),
       ),
     );
   }
-
 }

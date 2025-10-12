@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 
 class MeditacaoSonoView extends StatefulWidget {
   const MeditacaoSonoView({super.key});
@@ -11,130 +12,125 @@ class MeditacaoSonoView extends StatefulWidget {
 }
 
 class _MeditacaoSonoViewState extends State<MeditacaoSonoView> {
-  String? somSelecionado;
-  bool isPlaying = false;
-  int tempoSelecionado = 15;
-  Timer? _timer;
-  int _tempoRestante = 0;
+  int? _selectedTimer; // 10, 20, 30 minutos
+  bool _isPlaying = false;
+  Timer? _autoStopTimer;
 
-  final AudioPlayer _player = AudioPlayer();
+  String? _selectedSound;
+  late AudioPlayer _player;
 
-  final Map<String, String> sons = {
-    'Chuva': '🌧️',
-    'Mar': '🌊',
-    'Floresta': '🌲',
-    'Lareira': '🔥',
+  final Map<String, String> soundFiles = {
+    "Chuva": "lib/assets/music/chuva.mp3",
+    "Mar": "lib/assets/music/mar.mp3",
+    "Floresta": "lib/assets/music/floresta.mp3",
+    "Lareira": "lib/assets/music/lareira.mp3",
   };
 
-  // Caminhos dos sons (adicione os arquivos no pubspec.yaml)
-  final Map<String, String> _audioFiles = {
-    'Chuva': 'assets/sounds/chuva.mp3',
-    'Mar': 'assets/sounds/mar.mp3',
-    'Floresta': 'assets/sounds/floresta.mp3',
-    'Lareira': 'assets/sounds/lareira.mp3',
-  };
-
-  Future<void> selecionarSom(String nome) async {
-    _timer?.cancel();
-    await _player.stop();
-
-    final path = _audioFiles[nome];
-    if (path == null) return;
-
-    try {
-      
-      await _player.setAsset(path);
-      await _player.setLoopMode(LoopMode.one);
-
-      await _player.play();
-
-      setState(() {
-        somSelecionado = nome;
-        isPlaying = true;
-        _tempoRestante = tempoSelecionado * 60;
-      });
-
-      iniciarTemporizador();
-    } catch (e) {
-      debugPrint("Erro ao carregar som: $e");
-    }
+  @override
+  void initState() {
+    super.initState();
+    _player = AudioPlayer();
   }
 
-  Future<void> pausarSom() async {
-    if (isPlaying) {
-      await _player.pause();
-      _timer?.cancel();
-    } else {
-      await _player.play();
-      iniciarTemporizador();
-    }
-    setState(() {
-      isPlaying = !isPlaying;
-    });
-  }
+  Future<void> _playSelectedSound() async {
+    if (_selectedSound == null) return;
 
-  Future<void> reiniciarSom() async {
-    await _player.stop();
-    _timer?.cancel();
-    setState(() {
-      somSelecionado = null;
-      isPlaying = false;
-      _tempoRestante = 0;
-    });
-  }
-
-  void iniciarTemporizador() {
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
-      if (_tempoRestante > 0 && isPlaying) {
-        setState(() {
-          _tempoRestante--;
-        });
-      } else {
-        timer.cancel();
-        await _player.stop();
-        setState(() {
-          isPlaying = false;
-        });
-      }
-    });
-  }
-
-  void abrirTemporizador() {
-    showModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [15, 30, 60].map((tempo) {
-            return ListTile(
-              title: Text('$tempo minutos'),
-              onTap: () {
-                setState(() {
-                  tempoSelecionado = tempo;
-                  _tempoRestante = tempo * 60;
-                });
-                if (isPlaying) iniciarTemporizador();
-                Navigator.pop(context);
-              },
-            );
-          }).toList(),
-        );
-      },
+    final filePath = soundFiles[_selectedSound]!;
+    await _player.setAudioSource(
+      AudioSource.asset(
+        filePath,
+        tag: MediaItem(
+          id: _selectedSound!,
+          album: "Meditação Sono",
+          title: _selectedSound!,
+          artist: "App Serena",
+        ),
+      ),
     );
+
+    await _player.setLoopMode(LoopMode.one);
+    await _player.play();
   }
 
-  String formatarTempo(int segundos) {
-    final minutos = (segundos ~/ 60).toString().padLeft(2, '0');
-    final seg = (segundos % 60).toString().padLeft(2, '0');
-    return '$minutos:$seg';
+  void _togglePlay() async {
+    if (_selectedSound == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Selecione um som primeiro.")),
+      );
+      return;
+    }
+    if (_selectedTimer == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Selecione um tempo.")),
+      );
+      return;
+    }
+
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
+
+    if (_isPlaying) {
+      await _playSelectedSound();
+      _startAutoStopTimer();
+    } else {
+      _player.pause();
+      _stopTimer();
+    }
+  }
+
+  void _reset() {
+    _stopTimer();
+    _player.stop();
+    setState(() {
+      _isPlaying = false;
+      _selectedTimer = null;
+      _selectedSound = null;
+    });
+  }
+
+  void _startAutoStopTimer() {
+    _autoStopTimer?.cancel();
+    if (_selectedTimer != null) {
+      _autoStopTimer = Timer(Duration(minutes: _selectedTimer!), () {
+        _player.stop();
+        setState(() {
+          _isPlaying = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Tempo encerrado. Som desligado.")),
+        );
+      });
+    }
+  }
+
+  void _stopTimer() {
+    _autoStopTimer?.cancel();
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _stopTimer();
     _player.dispose();
     super.dispose();
+  }
+
+  Widget _buildSoundButton(String label, String emoji) {
+    final bool isSelected = _selectedSound == label;
+
+    return ElevatedButton.icon(
+      onPressed: () => setState(() => _selectedSound = label),
+      icon: Text(emoji, style: const TextStyle(fontSize: 24)),
+      label: Text(
+        label,
+        style: TextStyle(color: isSelected ? Colors.white : Colors.black87),
+      ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor:
+            isSelected ? const Color(0xFFABEE93) : Colors.grey[200],
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+    );
   }
 
   @override
@@ -146,103 +142,103 @@ class _MeditacaoSonoViewState extends State<MeditacaoSonoView> {
         title: const Text('Sono'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              _timer?.cancel();
-              _player.stop(); // sem await, roda em paralelo
-              Navigator.pop(context);
-            },
+          onPressed: () {
+            _stopTimer();
+            _player.stop();
+            Navigator.pop(context);
+          },
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const SizedBox(height: 20),
             const Text(
-              'Escolha um som relaxante para ajudar a dormir:',
-              style: TextStyle(fontSize: 18),
+              "Escolha um som relaxante para ajudar a dormir:",
               textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 25),
             Wrap(
-              spacing: 16,
-              runSpacing: 16,
+              spacing: 12,
+              runSpacing: 12,
               alignment: WrapAlignment.center,
-              children: sons.entries.map((entry) {
-                final isSelected = somSelecionado == entry.key;
-                return GestureDetector(
-                  onTap: () => selecionarSom(entry.key),
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: isSelected ? Colors.green[200] : Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: isSelected ? Colors.green : Colors.grey,
-                        width: 2,
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(entry.value, style: const TextStyle(fontSize: 32)),
-                        const SizedBox(height: 8),
-                        Text(entry.key, style: const TextStyle(fontSize: 16)),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
+              children: [
+                _buildSoundButton("Chuva", "🌧️"),
+                _buildSoundButton("Mar", "🌊"),
+                _buildSoundButton("Floresta", "🌲"),
+                _buildSoundButton("Lareira", "🔥"),
+              ],
             ),
-            const SizedBox(height: 32),
-            if (somSelecionado != null) ...[
-              Text(
-                'Tocando: $somSelecionado',
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Tempo restante: ${formatarTempo(_tempoRestante)}',
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16),
-              ),
-              const SizedBox(height: 16),
-              IconButton(
-                iconSize: 60,
-                icon: Icon(
-                  isPlaying ? Icons.pause_circle_filled : Icons.play_circle_fill,
-                  color: Colors.green[700],
+            const SizedBox(height: 35),
+            const Text(
+              "Timer para desligar o som automaticamente:",
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 10,
+              children: [
+                ChoiceChip(
+                  label: const Text("10 min"),
+                  selected: _selectedTimer == 10,
+                  onSelected: (_) => _selectTimer(10),
                 ),
-                onPressed: pausarSom,
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
-                onPressed: abrirTemporizador,
-                icon: const Icon(Icons.timer),
-                label: Text('Temporizador: $tempoSelecionado min'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[300],
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ChoiceChip(
+                  label: const Text("20 min"),
+                  selected: _selectedTimer == 20,
+                  onSelected: (_) => _selectTimer(20),
                 ),
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton.icon(
-                onPressed: reiniciarSom,
-                icon: const Icon(Icons.refresh),
-                label: const Text('Reiniciar'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[200],
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ChoiceChip(
+                  label: const Text("30 min"),
+                  selected: _selectedTimer == 30,
+                  onSelected: (_) => _selectTimer(30),
                 ),
-              ),
-            ],
+              ],
+            ),
+            const SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFABEE93),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
+                  label: Text(_isPlaying ? "Pausar" : "Começar"),
+                  onPressed: _togglePlay,
+                ),
+                const SizedBox(width: 30),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  icon: const Icon(Icons.refresh),
+                  label: const Text("Resetar"),
+                  onPressed: _reset,
+                ),
+              ],
+            ),
+            const Spacer(),
+            const Text(
+              "Durma bem e tenha sonhos tranquilos 🌙",
+              style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
+  }
+
+  void _selectTimer(int? minutes) {
+    setState(() {
+      _selectedTimer = minutes;
+    });
   }
 }
