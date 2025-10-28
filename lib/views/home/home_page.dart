@@ -114,7 +114,7 @@ class HomePageState extends State<HomePage> {
 
           // Botão de informação no canto inferior esquerdo
           Positioned(
-            bottom: 20,
+            bottom: 50,
             left: 20,
             child: IconButton(
               icon: const Icon(Icons.info, size: 32, color: Colors.black87),

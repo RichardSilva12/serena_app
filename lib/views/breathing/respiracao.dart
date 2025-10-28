@@ -33,13 +33,31 @@ class RespiracaoViewState extends State<RespiracaoView> {
       ),
       body: Stack(
         children: [
-          // 🔹 ONDA SUPERIOR DIREITA
+          // esquerdo
           Positioned(
-            top: 0,
-            right: 0,
-            child: CustomPaint(
-              size: Size(MediaQuery.of(context).size.width * 0.7, 180),
-              painter: TopRightWavePainter(),
+            top: -100,
+            left: -50,
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color.fromRGBO(126, 217, 87, 0.2),
+              ),
+            ),
+          ),
+
+          // direito
+          Positioned(
+            bottom: -100,
+            right: -50,
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color.fromRGBO(126, 217, 87, 0.3),
+              ),
             ),
           ),
 
@@ -133,29 +151,5 @@ class RespiracaoViewState extends State<RespiracaoView> {
   }
 }
 
-// 🔹 PINTA A ONDA SUPERIOR DIREITA
-class TopRightWavePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = const Color(0xFFA8E6CF).withValues(alpha: 0.7)
-      ..style = PaintingStyle.fill;
-
-    final path = Path();
-    path.moveTo(size.width, 2);
-    path.lineTo(size.width, size.height * 0.5);
-    path.quadraticBezierTo(
-      size.width * 0.6, size.height * 0.8,
-      size.width * 0.2, size.height * 0.4,
-    );
-    path.lineTo(0, 0);
-    path.close();
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-}
 
 
