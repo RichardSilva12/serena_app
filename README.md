@@ -4,6 +4,11 @@
   <img src="./lib/assets/images/serena_logo.png" alt="Serena Logo" width="200"/>
 </p>
 
+### 📱 Tela Inicial
+<p align="center">
+  <img src="./lib/assets/images/tela_inicial.png" alt="Tela Inicial Serena" width="250"/>
+</p>
+
 
 O **Serena** é um aplicativo móvel desenvolvido em **Flutter** com o objetivo de auxiliar o cuidado com a **saúde mental**, oferecendo suporte emocional por meio de **técnicas de respiração, meditação guiada e relaxamento**.  
 
