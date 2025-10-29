@@ -1,6 +1,6 @@
 # 🌿 Serena - Aplicativo de Saúde Mental
 
-![Serena Logo](./assets/serena_logo.png)
+![Serena Logo](./lib/assets/images/serena_logo.png)
 
 O **Serena** é um aplicativo móvel desenvolvido em **Flutter** com o objetivo de auxiliar o cuidado com a **saúde mental**, oferecendo suporte emocional por meio de **técnicas de respiração, meditação guiada e relaxamento**.  
 
