@@ -11,7 +11,7 @@ O **Serena** é um aplicativo móvel desenvolvido em **Flutter** com o objetivo 
 ## 🧘 Sobre o Projeto
 
 Em um mundo cada vez mais acelerado e estressante, cuidar da mente se tornou essencial.  
-O **Serena** foi criado para proporcionar um espaço de tranquilidade e autocuidado, permitindo que o usuário pratique **exercícios de respiração, meditações guiadas** e tenha acesso a um **sistema de SOS emocional**, tudo dentro de um ambiente leve e acolhedor.
+O **Serena** foi criado para proporcionar um espaço de tranquilidade e autocuidado, permitindo que o usuário pratique **exercícios de respiração, meditações guiadas** e tenha acesso a um emocional, tudo dentro de um ambiente leve e acolhedor.
 
 O aplicativo foi desenvolvido como parte de um projeto de **Iniciação Científica**, intitulado:  
 > **"Desenvolvimento de um Aplicativo Móvel para Auxílio e Cuidados com a Saúde Mental"**  
@@ -21,8 +21,7 @@ O aplicativo foi desenvolvido como parte de um projeto de **Iniciação Científ
 ## 🎯 Principais Funcionalidades
 
 🧘‍♀️ **Técnicas de Meditação:** Sessões de meditação guiada, relaxamento e foco.  
-🌬️ **Exercícios de Respiração:** Controle de ansiedade e estresse com técnicas respiratórias.  
-🆘 **Tela SOS:** Acesso rápido a orientações e recursos em momentos de crise.  
+🌬️ **Exercícios de Respiração:** Controle de ansiedade e estresse com técnicas respiratórias.   
 🧠 **Quiz de Autocuidado:** Questionário que recomenda atividades conforme o estado emocional do usuário.  
 🎵 **Músicas e Sons Relaxantes:** Sons ambientes e melodias suaves para auxiliar nas práticas.  
 📚 **Informações Educativas:** Conteúdos sobre bem-estar emocional e práticas de saúde mental.  
@@ -54,11 +53,11 @@ lib/
 ├── assets/               # Imagens e mídias do app
 ├── core/
 │   └── routes/           # Gerenciamento de rotas e navegação
+│   └── footer/           # Gerenciamento de rotas e navegação
 ├── views/                # Telas do aplicativo
 │   ├── home/             # Tela inicial e navegação principal
 │   ├── meditation/       # Tela de meditação
 │   ├── breathing/        # Tela de respiração
-│   ├── sos/              # Tela de emergência emocional
 │   ├── quiz/             # Questionário de autoconhecimento
 │   └── info/             # Telas informativas
 └── main.dart             # Ponto de entrada do aplicativo
@@ -108,8 +107,7 @@ O arquivo gerado ficará em:
 ## 💡 Ideias Futuras
 
 - Integração com API de profissionais da saúde  
-- Registro de humor diário  
-- Modo offline com sincronização posterior  
+- Registro de humor diário    
 - Notificações de lembrete para práticas diárias  
 - Relatórios de progresso emocional  
 
@@ -131,9 +129,9 @@ O arquivo gerado ficará em:
 
 ## 🧑‍💻 Autor
 
-**Desenvolvido por:** Richard Silva  
+**Desenvolvido por:** Richard Peghin da Silva  
 📚 Projeto de Iniciação Científica – Universidade do Sagrado Coração  
-📧 Contato: richard.silva@email.com  
+📧 Contato: richard.a.peghin@gmail.com  
 
 ---
 
